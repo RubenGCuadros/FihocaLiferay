@@ -17,12 +17,42 @@
 		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 
+<context:property-placeholder
+location="classpath:config.properties"
+ignore-unresolvable="true"		  		
+/>
+
+
+
 <bean id="helloWorld" class="com.privalia.presentation.HelloWorld">
 		<property name="hello" value="Hola Mundo!"></property>
 </bean>
 
 <bean id="helloWorldConst" class="com.privalia.presentation.HelloWorld">
 		<constructor-arg index="0" value="Hola Mundo From Constructor!" type="java.lang.String"/>
+</bean>
+
+<bean id="student" class="com.privalia.entitiy.Student">
+	<property name="idStudent" value="1"></property>
+	<property name="name" value="El compañero"></property>
+	<property name="surname" value="Jaime"></property>
+	<property name="age" value="24"></property>
+	<property name="address">
+		<ref bean="address"/>
+	</property>
+</bean>
+
+<bean id ="studentConstructor" class="com.privalia.entitiy.Student">
+	<constructor-arg index="0" value="${student.idstudent}" type="int"/>
+	<constructor-arg index="1" value="${student.name}" type="java.lang.String"/>
+	<constructor-arg index="2" value="${student.surname}" type="java.lang.String"/>
+	<constructor-arg index="3" value="${student.age}" type="int"/>
+	<constructor-arg ref="address"/>	
+</bean>
+
+<bean id ="address" class ="com.privalia.entitiy.Address">
+	<constructor-arg index="0" value="1" type="int" />
+	<constructor-arg index="1" value="Calle San Juan" type="java.lang.String"/>	
 </bean>
 
 

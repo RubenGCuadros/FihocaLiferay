@@ -1,4 +1,4 @@
-package com.privalia.presentation.annotations2;
+package com.privalia.presentation.annotations3;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,19 +13,19 @@ public class HelloWorld {
 		return hello;
 	}
 
-	@Autowired
-	@Value("Hello World From Annotations!")
-	public void setHello(String hello) {
+	public void setHelloWorld(String hello) {
 		this.hello = hello;
 	}
 	
 	public HelloWorld(){
 		
 	}
-
-	public HelloWorld(String hello) {
-		super();
+	
+	@Autowired
+	public HelloWorld(@Value("Hello World from constructor") String hello){
 		this.hello = hello;
-	}	
+	}
+	
+	
 	
 }
