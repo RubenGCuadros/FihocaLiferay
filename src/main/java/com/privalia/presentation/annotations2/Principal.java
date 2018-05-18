@@ -8,8 +8,7 @@ public class Principal {
 
 		AnnotationConfigApplicationContext annotationContext = new AnnotationConfigApplicationContext();
 		
-		annotationContext.scan("com.privalia.presentation.annotations2");
-		annotationContext.refresh();
+
 		
 		HelloWorld helloWorld = annotationContext.getBean(HelloWorld.class);
 		System.out.println(helloWorld.getHello());

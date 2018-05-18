@@ -17,11 +17,29 @@
 		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 
+
+<!-- <bean id="compra" class="com.privalia.aspectos.Comprar"></bean> -->
+
+<!-- <bean id="validarMaterial" class="com.privalia.aspectos.ValidarMaterial"></bean> -->
+
+<!-- <aop:config> -->
+<!-- 	<aop:aspect ref="validarMaterial"> -->
+<!-- 		<aop:pointcut expression="execution( * com.privalia.aspectos.Comprar.compra(..) )" id="compraPointCut"/> -->
+		
+<!-- 		<aop:before pointcut-ref="compraPointCut" method="comprobarCantidad"/> -->
+		
+<!-- 		<aop:after-returning pointcut-ref="compraPointCut" method="empaquetar"/> -->
+		
+<!-- 		<aop:after-throwing pointcut-ref="compraPointCut" method="ponerReclamacion"/>	 -->
+			
+<!-- 	</aop:aspect> -->
+<!-- </aop:config> -->
+
+
 <context:property-placeholder
 location="classpath:config.properties"
 ignore-unresolvable="true"		  		
 />
-
 
 
 <bean id="helloWorld" class="com.privalia.presentation.HelloWorld">
@@ -54,6 +72,47 @@ ignore-unresolvable="true"
 	<constructor-arg index="0" value="1" type="int" />
 	<constructor-arg index="1" value="Calle San Juan" type="java.lang.String"/>	
 </bean>
+
+<bean id="student2" class="com.privalia.entitiy.listas.Student">
+	<property name="idStudent" value="1"></property>
+	<property name="name" value="El compañero"></property>
+	<property name="surname" value="Jaime"></property>
+	<property name="age" value="24"></property>
+	<property name="listTeacher">
+		<list>
+			<bean class="com.privalia.entitiy.listas.Teacher">
+				<property name="idTeacher" value="1"/>
+				<property name="name" value="Jordi"/>
+			</bean>
+			<bean class="com.privalia.entitiy.listas.Teacher">
+				<property name="idTeacher" value="2"/>
+				<property name="name" value="Pepe"/>
+			</bean>
+		</list>
+	</property>
+</bean>
+
+
+<bean id="compra" class="com.privalia.aspectos.Comprar"/>
+ 
+<bean id="validarCompra" class="com.privalia.aspectos.ValidarMaterial"/>
+ 
+<aop:config>
+	<aop:aspect ref="validarCompra">
+	<!-- https://howtodoinjava.com/spring/spring-aop/writing-spring-aop-aspectj-pointcut-expressions-with-examples/ -->
+		<aop:pointcut expression="execution( * com.privalia.aspectos.Comprar.compra(..) )" 
+		id="compraPoinCut"/>
+ 
+		<!-- Antes de comprar comprobamos la cantidad -->
+		<aop:before pointcut-ref="compraPoinCut" method="comprobarCantidad"/>
+ 
+		<!-- Despues si todo va bien, lo empaquetamos -->
+		<aop:after-returning pointcut-ref="compraPoinCut" method="empaquetar"/>
+ 
+		<!-- En caso de error, ponemos una reclamacion -->
+		<aop:after-throwing pointcut-ref="compraPoinCut" method="ponerReclamacion"/>
+	</aop:aspect>
+</aop:config>
 
 
 </beans>
